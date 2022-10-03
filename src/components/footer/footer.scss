@@ -6,10 +6,6 @@
   background-position: top;
   background-size: cover;
   background-repeat: no-repeat;
-  opacity: 0;
-  animation: fadeMe 0.3s linear;
-  animation-delay: 2s;
-  animation-fill-mode: forwards;
 
   &::before {
     content: '';
@@ -52,14 +48,5 @@
         margin-top: 1rem;
       }
     }
-  }
-}
-
-@keyframes fadeMe {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
   }
 }
