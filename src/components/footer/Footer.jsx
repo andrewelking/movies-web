@@ -1,20 +1,47 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import './footer.scss';
 
 import { Link } from 'react-router-dom';
 
-import bg from '../../assets/footer-bg.jpg';
-import logo from '../../assets/tmovie.png';
+import logo from '../../assets/silvo.png';
+let i = 0;
 
 const Footer = () => {
+  const [background, setBackground] = useState('');
+  const footerRef = useRef(null);
+
+  function importAll(r) {
+    let images = [];
+    r.keys().map((item, index) => { return images.push(r(item))});
+    return images;
+  }
+
+  const images = importAll(
+    require.context('../../assets/lorsplasharts', false, /\.(png|jpe?g|svg)$/)
+  );
+
+  
+  useEffect(() => {
+    if(i > images.length) i = 0;
+    const interval = setInterval(() => {
+      setBackground(images[i]);
+      i++;
+      footerRef.current.setAttribute('style', `background-image: url('${background}')`)
+    }, 5000)
+
+    return () => {
+      clearInterval(interval);
+    }
+  }, [background, images])
+
   return (
-    <div className='footer' style={{ backgroundImage: `url(${bg})` }}>
+    <div className='footer' ref={footerRef} >
       <div className='footer__content container'>
         <div className='footer__content__logo'>
           <div className='logo'>
             <img src={logo} alt='' />
-            <Link to='/'>tMovies</Link>
+            <Link to='/'>Silvo</Link>
           </div>
         </div>
         <div className='footer__content__menus'>
